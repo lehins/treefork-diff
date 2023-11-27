@@ -83,9 +83,6 @@ import Data.Hashable (Hashed, unhashed)
 import qualified Data.HashMap.Strict as HM
 import qualified Data.HashSet        as HS
 
--- aeson
-import qualified Data.Aeson as Aeson
-
 -- | Difference between two 'ToExpr' values.
 --
 -- >>> let x = (1, Just 2) :: (Int, Maybe Int)
@@ -295,7 +292,6 @@ instance ToExpr a => ToExpr (Mon.Product a) where
 instance ToExpr a => ToExpr (Mon.First a) where
 instance ToExpr a => ToExpr (Mon.Last a) where
 
-instance ToExpr a => ToExpr (Semi.Option a) where
 instance ToExpr a => ToExpr (Semi.Min a) where
 instance ToExpr a => ToExpr (Semi.Max a) where
 instance ToExpr a => ToExpr (Semi.First a) where
@@ -458,12 +454,6 @@ instance (ToExpr k, ToExpr v) => ToExpr (HM.HashMap k v) where
     toExpr x = App "HM.fromList" [ toExpr $ HM.toList x ]
 instance (ToExpr k) => ToExpr (HS.HashSet k) where
     toExpr x = App "HS.fromList" [ toExpr $ HS.toList x ]
-
--------------------------------------------------------------------------------
--- aeson
--------------------------------------------------------------------------------
-
-instance ToExpr Aeson.Value
 
 -------------------------------------------------------------------------------
 -- Doctest
